@@ -8,7 +8,8 @@
 			</sequential>
 			
 			<!-- For practical reasons of enabling the target model to be loaded within the
-				 same project, we need to rename the package. We can do this using EOL or Flock.
+				 same project, we need to rename the package. This is currently performed in EPL
+				 as well, but could be done using either EOL or Flock, for example.
 				 
 				 TODO: 	Will need to consider what will happen with multiple .rct files in a project,
 				 		and how this change is reflected across several files. I suspect it will be
