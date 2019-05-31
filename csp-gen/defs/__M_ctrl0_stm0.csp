@@ -125,9 +125,9 @@ CS___M_ctrl0_stm0_T0_s_3_sync = {|
 
 
 __M_ctrl0_stm0_T0_s_3_triggers = {|
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0",
 	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1",
-	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0_t_2",
-	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0"
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0_t_2"
 |}
 S___M_ctrl0_stm0_T0_s_3(id__) = let
 	T___M_ctrl0_stm0_T0_t_2(id__)	= __M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0_t_2" ->  __M_ctrl0_stm0_exit!"__M_ctrl0_stm0_T0_s_3"!"__M_ctrl0_stm0_T0_s_3" -> SKIP;
@@ -142,7 +142,7 @@ S___M_ctrl0_stm0_T0_s_3(id__) = let
 	   														; STOP /\ (
 	   															    T___M_ctrl0_stm0_T0_t_2(id__)
 	   															    []
-	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0_t_2","__M_ctrl0_stm0_T0"}) ->
+	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T0","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0_t_2"}) ->
 	   															      __M_ctrl0_stm0_exit?y:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_3"})!"__M_ctrl0_stm0_T0_s_3" -> (
 	   															      	SKIP;
 	   															      	__M_ctrl0_stm0_exited!y!"__M_ctrl0_stm0_T0_s_3" -> SKIP);
@@ -168,8 +168,8 @@ CS___M_ctrl0_stm0_T0_s_2_sync = {|
 
 
 __M_ctrl0_stm0_T0_s_2_triggers = {|
-	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1",
-	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0"
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0",
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1"
 |}
 S___M_ctrl0_stm0_T0_s_2(id__) = let
 	T___M_ctrl0_stm0_T0(id__)	= __M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0" ->  __M_ctrl0_stm0_exit!"__M_ctrl0_stm0_T0_s_2"!"__M_ctrl0_stm0_T0_s_2" -> SKIP;
@@ -184,7 +184,7 @@ S___M_ctrl0_stm0_T0_s_2(id__) = let
 	   														; STOP /\ (
 	   															    T___M_ctrl0_stm0_T0(id__)
 	   															    []
-	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0"}) ->
+	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T0","__M_ctrl0_stm0_T1"}) ->
 	   															      __M_ctrl0_stm0_exit?y:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_2"})!"__M_ctrl0_stm0_T0_s_2" -> (
 	   															      	SKIP;
 	   															      	__M_ctrl0_stm0_exited!y!"__M_ctrl0_stm0_T0_s_2" -> SKIP);

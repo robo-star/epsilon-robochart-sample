@@ -137,7 +137,7 @@ S___M_ctrl0_stm0_T0_s_3(id__) = let
 	   														; STOP /\ (
 	   															    T___M_ctrl0_stm0_T0_t_2(id__)
 	   															    []
-	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0_t_2","__M_ctrl0_stm0_T0"}) ->
+	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T0","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0_t_2"}) ->
 	   															      __M_ctrl0_stm0_exit?y:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_3"})!"__M_ctrl0_stm0_T0_s_3" -> (
 	   															      	SKIP;
 	   															      	__M_ctrl0_stm0_exited!y!"__M_ctrl0_stm0_T0_s_3" -> SKIP);
@@ -180,7 +180,7 @@ S___M_ctrl0_stm0_T0_s_2(id__) = let
 	   														; STOP /\ (
 	   															    T___M_ctrl0_stm0_T0(id__)
 	   															    []
-	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0"}) ->
+	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T0","__M_ctrl0_stm0_T1"}) ->
 	   															      __M_ctrl0_stm0_exit?y:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_2"})!"__M_ctrl0_stm0_T0_s_2" -> (
 	   															      	SKIP;
 	   															      	__M_ctrl0_stm0_exited!y!"__M_ctrl0_stm0_T0_s_2" -> SKIP);

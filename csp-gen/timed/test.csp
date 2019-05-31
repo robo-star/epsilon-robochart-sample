@@ -9,7 +9,6 @@ include "../defs/M.csp"
 include "../defs/core_defs.csp"
 include "../defs/M_ctrl0.csp"
 include "../defs/M_ctrl0_stm0.csp"
-include "../defs/new_defs.csp"
 
 module timed
 exports

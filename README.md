@@ -6,15 +6,39 @@ Install
 
 Currently this configuration targets the latest version of RoboTool.
 
-1. Installing Epsilon
+1. Installing RoboTool
+
+   Navigating to ``Help > Install New Software``, then typing in the URL ```RoboTool - https://www.cs.york.ac.uk/robostar/robotool/update/``` and selecting all, as shown below.
+   
+   ![Installing new software](install-new-software.png "Install new software.")
+   
+2. Installing Epsilon
    
    Using the update site: http://download.eclipse.org/epsilon/updates/
    
-   Installing the following features:
+   Install the following features only:
    
 	* Epsilon Core
 	* Epsilon Core Development Tools
 	* Epsilon EMF Integration
+
+Import
+======
+
+1. Importing the project
+
+Import the project, by going to ``File > Import`` and choosing ``General > Projects from folder or archive``. Then after clicking on ``Next``, click on ``Archive`` and choose the .zip file. Then choose only the Eclipse project, and not the folder, as shown below. Then click on ``Finish``.
+
+Since the imported project is a RoboChart project you will be asked whether you would like to have the graphical representations shown automatically.
+
+2. Importing the launch configuration
+
+Import the launch configuration for the ANT build script by going to ``File > Import`` and choosing ``Run Debug > Launch Configurations``. 
+
+Then locate the directory of the current workspace, expand the tree on the left to reveal the ``Epsilon Transforms.launch`` file, select it and finally click ``Finish``. 
+
+The launch configuration will show under ``Run > External Tools`` as well as by clicking on the green arrow with a suitcase, as shown below.
+
 
 Run
 ===
@@ -34,6 +58,8 @@ the parameter "SourceFile":
 	
 There will be better ways in the future of specifying this for all relevant
 files in the project, namely, including all necessary packages.
+
+*Launch configuration*
 
 *Target file*
 

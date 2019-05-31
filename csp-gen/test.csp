@@ -2,7 +2,6 @@ include "defs/test_defs.csp"
 include "instantiations.csp"
 include "defs/robochart_defs.csp"
 include "defs/core_defs.csp"
-include "defs/new_defs.csp"
 
 include "defs/M_ctrl0_stm0.csp"
 include "defs/M.csp"
