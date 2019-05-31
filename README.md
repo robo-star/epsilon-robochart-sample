@@ -16,18 +16,28 @@ Currently this configuration targets the latest version of RoboTool.
    
    Using the update site: http://download.eclipse.org/epsilon/updates/
    
-   Install the following features only:
+   Install the following features only, as shown below:
    
 	* Epsilon Core
 	* Epsilon Core Development Tools
 	* Epsilon EMF Integration
+	
+   ![Installing new software](install-epsilon.png "Install Epsilon.")
 
 Import
 ======
 
 1. Importing the project
 
-Import the project, by going to ``File > Import`` and choosing ``General > Projects from folder or archive``. Then after clicking on ``Next``, click on ``Archive`` and choose the .zip file. Then choose only the Eclipse project, and not the folder, as shown below. Then click on ``Finish``.
+Import the project, by going to ``File > Import`` and choosing ``General > Projects from folder or archive``. 
+
+![Import project](import-project-from-archive.png "Import project.")
+
+Then after clicking on ``Next``, click on ``Archive`` and choose the .zip file. Then choose only the Eclipse project, and not the folder, as shown below. 
+
+![Import project](import-project-from-archive-1.png "Import project.")
+
+Then click on ``Finish``.
 
 Since the imported project is a RoboChart project you will be asked whether you would like to have the graphical representations shown automatically.
 
@@ -35,9 +45,15 @@ Since the imported project is a RoboChart project you will be asked whether you 
 
 Import the launch configuration for the ANT build script by going to ``File > Import`` and choosing ``Run Debug > Launch Configurations``. 
 
+![Import launch configuration](import-launch-configuration.png "Import launch configuration.")
+
 Then locate the directory of the current workspace, expand the tree on the left to reveal the ``Epsilon Transforms.launch`` file, select it and finally click ``Finish``. 
 
+![Import launch configuration](import-launch-configuration-1.png "Import launch configuration.")
+
 The launch configuration will show under ``Run > External Tools`` as well as by clicking on the green arrow with a suitcase, as shown below.
+
+![External tools launch configuration](external-tools-configuration.png "External tools launch configuration.")
 
 
 Run
