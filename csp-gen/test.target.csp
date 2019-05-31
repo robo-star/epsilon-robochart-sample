@@ -1,0 +1,16 @@
+include "defs/__defs.csp"
+include "instantiations.csp"
+include "defs/robochart_defs.csp"
+include "defs/core_defs.csp"
+
+include "defs/__M_ctrl0.csp"
+include "defs/__M_ctrl0_stm0.csp"
+include "defs/__M.csp"
+
+channel r__
+
+			
+
+transparent diamond
+transparent sbisim
+transparent chase

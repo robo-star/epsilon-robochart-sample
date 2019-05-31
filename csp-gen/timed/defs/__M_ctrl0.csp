@@ -1,0 +1,24 @@
+Timed(OneStep) {
+	
+-- declaring controller memory
+
+__M_ctrl0_visibleMemoryEvents = {||}
+
+Memory___M_ctrl0(id__) = SKIP
+
+__M_ctrl0(id__) = prioritise(wbisim((__M_ctrl0_stm0(id__)[[__M_ctrl0_stm0_terminate <- __M_ctrl0_terminate]])
+			[|union({||},
+			{||})|]
+			Memory___M_ctrl0(id__)
+			)\union({||},
+			{||})
+			[|{|__M_ctrl0_terminate|}|>SKIP,<union(__M_ctrl0_visibleMemoryEvents,{__M_ctrl0_terminate}),{tock}>)
+-- VS version
+__M_ctrl0_VS(id__) = prioritise(wbisim((__M_ctrl0_stm0_VS(id__)[[__M_ctrl0_stm0_terminate <- __M_ctrl0_terminate]])
+			[|union({||},
+			{||})|]
+			Memory___M_ctrl0(id__)
+			)\union({||},
+			{||})
+			[|{|__M_ctrl0_terminate|}|>SKIP,<union(__M_ctrl0_visibleMemoryEvents,{__M_ctrl0_terminate}),{tock}>)
+}

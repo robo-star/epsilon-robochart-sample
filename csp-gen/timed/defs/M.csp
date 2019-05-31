@@ -1,0 +1,24 @@
+Timed(OneStep) {
+
+-- declaring module memory
+
+M_visibleMemoryEvents = {||}
+
+Memory_M_rp(id__) = SKIP
+
+M(id__) = prioritise((	((M_ctrl0(id__)[[M_ctrl0_terminate <- M_terminate]])
+	[|union({||},
+	{||})|]
+	Memory_M_rp(id__)
+	)\union({||},{||})
+	[|{|M_terminate|}|>SKIP)\{|M_terminate|},<M_visibleMemoryEvents,{tock}>)
+	
+-- visible state equivalent
+
+M_VS(id__) = prioritise((	((M_ctrl0_VS(id__)[[M_ctrl0_terminate <- M_terminate]])
+	[|union({||},
+	{||})|]
+	Memory_M_rp(id__)
+	)\union({||},{||})
+	[|{|M_terminate|}|>SKIP)\{|M_terminate|},<M_visibleMemoryEvents,{tock}>)
+}	

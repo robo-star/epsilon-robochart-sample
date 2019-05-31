@@ -1,0 +1,19 @@
+ExternalEvents___M = {||}
+
+assert T___M(0) :[deterministic]
+-- zeno freedom
+assert T___M(0) :[divergence-free]
+assert T___M(0) ; RUN({tock}) :[deadlock-free]
+
+-- no time locks
+assert RUN({tock}) ||| CHAOS(ExternalEvents___M)      [F= prioritise((T___M(0) ; RUN({tock})) |\ union(ExternalEvents___M,{tock}),<{},{tock}>)
+
+-- every state is reachable in this module
+
+-- timed model is a refinement
+assert sbisim(diamond(__M(0))) [F= T___M(0) \ {tock}
+assert sbisim(diamond(__M_VS(0))) [T= T___M_VS(0) \ {tock}
+
+-- do time constraints constrain traces?
+assert T___M(0) \ {tock} [T= sbisim(diamond(__M(0)))
+assert T___M_VS(0) \ {tock} [T= sbisim(diamond(__M_VS(0)))

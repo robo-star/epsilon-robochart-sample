@@ -1,0 +1,297 @@
+channel __M_ctrl0_stm0_internal__: __M_ctrl0_stm0_TIDS
+
+ShowEvents___M_ctrl0_stm0(P,E) = P[[ __M_ctrl0_stm0_entered.x.y <- __M_ctrl0_stm0_enteredV.y | __M_ctrl0_stm0_entered.x.y <- E]]
+							 [[	__M_ctrl0_stm0_enter.x.y <- __M_ctrl0_stm0_enterV.y | __M_ctrl0_stm0_enter.x.y <- E]]
+							 [[ __M_ctrl0_stm0_exit.x.y <- __M_ctrl0_stm0_exitV.y | __M_ctrl0_stm0_exit.x.y <- E]]
+							 [[ __M_ctrl0_stm0_exited.x.y <- __M_ctrl0_stm0_exitedV.y | __M_ctrl0_stm0_exited.x.y <- E ]]
+							 
+ShowEnteredV___M_ctrl0_stm0(P) = P[[ __M_ctrl0_stm0_entered.x.y <- __M_ctrl0_stm0_enteredV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS ]]
+ShowEnterV___M_ctrl0_stm0(P) = P[[ __M_ctrl0_stm0_enter.x.y <- __M_ctrl0_stm0_enterV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS ]]
+ShowExitV___M_ctrl0_stm0(P) = P[[ __M_ctrl0_stm0_exit.x.y <- __M_ctrl0_stm0_exitV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS ]]
+ShowExitedV___M_ctrl0_stm0(P) = P[[ __M_ctrl0_stm0_exited.x.y <- __M_ctrl0_stm0_exitedV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS ]]
+ShowV___M_ctrl0_stm0(P) = P[[ __M_ctrl0_stm0_entered.x.y <- __M_ctrl0_stm0_enteredV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS]]
+							 [[	__M_ctrl0_stm0_enter.x.y <- __M_ctrl0_stm0_enterV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS ]]
+							 [[ __M_ctrl0_stm0_exit.x.y <- __M_ctrl0_stm0_exitV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS]]
+							 [[ __M_ctrl0_stm0_exited.x.y <- __M_ctrl0_stm0_exitedV.y | x <- __M_ctrl0_stm0_SIDS, y <- __M_ctrl0_stm0_SIDS ]]
+
+channel __M_ctrl0_stm0_enteredV, __M_ctrl0_stm0_enterV, __M_ctrl0_stm0_exitV, __M_ctrl0_stm0_exitedV : __M_ctrl0_stm0_SIDS
+channel __M_ctrl0_stm0_enter, __M_ctrl0_stm0_entered: __M_ctrl0_stm0_SIDS.__M_ctrl0_stm0_SIDS
+channel __M_ctrl0_stm0_exit,__M_ctrl0_stm0_exited: __M_ctrl0_stm0_SIDS.__M_ctrl0_stm0_SIDS
+
+
+
+-- declaring identifiers of state and final states
+__M_ctrl0_stm0_SIDS = {
+	"__M_ctrl0_stm0",
+	"__M_ctrl0_stm0_s0",
+	"__M_ctrl0_stm0_F",
+	"__M_ctrl0_stm0_T0_s_3",
+	"__M_ctrl0_stm0_T0_s_2"
+}
+
+-- declaring identifiers of transitions
+__M_ctrl0_stm0_TIDS = {
+	"__NULLTRANSITION__",
+	"__M_ctrl0_stm0_T0",
+	"__M_ctrl0_stm0_T1",
+	"__M_ctrl0_stm0_T0_t_3",
+	"__M_ctrl0_stm0_T0_t_2"
+}
+
+-- declaring state machine events
+
+channel __M_ctrl0_stm0_terminate
+
+-- declaring all states
+CS___M_ctrl0_stm0_s0_sync = {|
+	__M_ctrl0_stm0_enter.y.x, 
+	__M_ctrl0_stm0_entered.y.x, 
+	__M_ctrl0_stm0_exit.y.x, 
+	__M_ctrl0_stm0_exited.y.x,
+	__M_ctrl0_stm0_enter.x.y, 
+	__M_ctrl0_stm0_entered.x.y, 
+	__M_ctrl0_stm0_exit.x.y, 
+	__M_ctrl0_stm0_exited.x.y |
+	x <- {"__M_ctrl0_stm0_s0","__M_ctrl0_stm0_F","__M_ctrl0_stm0_T0_s_3","__M_ctrl0_stm0_T0_s_2"},
+	y <- {"__M_ctrl0_stm0_s0"}
+|}
+
+
+
+__M_ctrl0_stm0_s0_triggers = {|
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1"
+|}
+S___M_ctrl0_stm0_s0(id__) = let
+	T___M_ctrl0_stm0_T1(id__)	= __M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T1" ->  __M_ctrl0_stm0_exit!"__M_ctrl0_stm0_s0"!"__M_ctrl0_stm0_s0" -> SKIP;
+						SKIP;__M_ctrl0_stm0_exited!"__M_ctrl0_stm0_s0"!"__M_ctrl0_stm0_s0" -> SKIP;
+						__M_ctrl0_stm0_enter!"__M_ctrl0_stm0_s0"!"__M_ctrl0_stm0_F" -> __M_ctrl0_stm0_entered!"__M_ctrl0_stm0_s0"!"__M_ctrl0_stm0_F" ->
+						S___M_ctrl0_stm0_s0(id__)
+
+	S___M_ctrl0_stm0_s0_execute(id__,o__) = 
+	SKIP; 
+	__M_ctrl0_stm0_entered!o__!"__M_ctrl0_stm0_s0" ->
+	   (SKIP
+	   														; STOP /\ (
+	   															    T___M_ctrl0_stm0_T1(id__)
+	   															    []
+	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T1"}) ->
+	   															      __M_ctrl0_stm0_exit?y:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_s0"})!"__M_ctrl0_stm0_s0" -> (
+	   															      	SKIP;
+	   															      	__M_ctrl0_stm0_exited!y!"__M_ctrl0_stm0_s0" -> SKIP);
+	   															      	S___M_ctrl0_stm0_s0(id__)
+	   															    )
+	   														)
+within
+__M_ctrl0_stm0_enter?x__:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_s0"})!"__M_ctrl0_stm0_s0" -> ( 
+	S___M_ctrl0_stm0_s0_execute(id__,x__)) 
+CS___M_ctrl0_stm0_F_sync = {|
+	__M_ctrl0_stm0_enter.y.x, 
+	__M_ctrl0_stm0_entered.y.x, 
+	__M_ctrl0_stm0_exit.y.x, 
+	__M_ctrl0_stm0_exited.y.x,
+	__M_ctrl0_stm0_enter.x.y, 
+	__M_ctrl0_stm0_entered.x.y, 
+	__M_ctrl0_stm0_exit.x.y, 
+	__M_ctrl0_stm0_exited.x.y |
+	x <- {"__M_ctrl0_stm0_s0","__M_ctrl0_stm0_F","__M_ctrl0_stm0_T0_s_3","__M_ctrl0_stm0_T0_s_2"},
+	y <- {"__M_ctrl0_stm0_F"}
+|}
+
+
+
+__M_ctrl0_stm0_F_triggers = {||}
+S___M_ctrl0_stm0_F(id__) = let
+
+	S___M_ctrl0_stm0_F_execute(id__,o__) = 
+	SKIP; 
+	__M_ctrl0_stm0_entered!o__!"__M_ctrl0_stm0_F" ->
+	   __M_ctrl0_stm0_terminate -> SKIP
+	   within
+__M_ctrl0_stm0_enter?x__:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_F"})!"__M_ctrl0_stm0_F" -> ( 
+	S___M_ctrl0_stm0_F_execute(id__,x__)) 
+CS___M_ctrl0_stm0_T0_s_3_sync = {|
+	__M_ctrl0_stm0_enter.y.x, 
+	__M_ctrl0_stm0_entered.y.x, 
+	__M_ctrl0_stm0_exit.y.x, 
+	__M_ctrl0_stm0_exited.y.x,
+	__M_ctrl0_stm0_enter.x.y, 
+	__M_ctrl0_stm0_entered.x.y, 
+	__M_ctrl0_stm0_exit.x.y, 
+	__M_ctrl0_stm0_exited.x.y |
+	x <- {"__M_ctrl0_stm0_s0","__M_ctrl0_stm0_F","__M_ctrl0_stm0_T0_s_3","__M_ctrl0_stm0_T0_s_2"},
+	y <- {"__M_ctrl0_stm0_T0_s_3"}
+|}
+
+
+
+__M_ctrl0_stm0_T0_s_3_triggers = {|
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1",
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0_t_2",
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0"
+|}
+S___M_ctrl0_stm0_T0_s_3(id__) = let
+	T___M_ctrl0_stm0_T0_t_2(id__)	= __M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0_t_2" ->  __M_ctrl0_stm0_exit!"__M_ctrl0_stm0_T0_s_3"!"__M_ctrl0_stm0_T0_s_3" -> SKIP;
+						SKIP;__M_ctrl0_stm0_exited!"__M_ctrl0_stm0_T0_s_3"!"__M_ctrl0_stm0_T0_s_3" -> SKIP;
+						SKIP;__M_ctrl0_stm0_enter!"__M_ctrl0_stm0_T0_s_3"!"__M_ctrl0_stm0_T0_s_2" -> __M_ctrl0_stm0_entered!"__M_ctrl0_stm0_T0_s_3"!"__M_ctrl0_stm0_T0_s_2" ->
+						S___M_ctrl0_stm0_T0_s_3(id__)
+
+	S___M_ctrl0_stm0_T0_s_3_execute(id__,o__) = 
+	SKIP; 
+	__M_ctrl0_stm0_entered!o__!"__M_ctrl0_stm0_T0_s_3" ->
+	   (SKIP
+	   														; STOP /\ (
+	   															    T___M_ctrl0_stm0_T0_t_2(id__)
+	   															    []
+	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0_t_2","__M_ctrl0_stm0_T0"}) ->
+	   															      __M_ctrl0_stm0_exit?y:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_3"})!"__M_ctrl0_stm0_T0_s_3" -> (
+	   															      	SKIP;
+	   															      	__M_ctrl0_stm0_exited!y!"__M_ctrl0_stm0_T0_s_3" -> SKIP);
+	   															      	S___M_ctrl0_stm0_T0_s_3(id__)
+	   															    )
+	   														)
+within
+__M_ctrl0_stm0_enter?x__:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_3"})!"__M_ctrl0_stm0_T0_s_3" -> ( 
+	S___M_ctrl0_stm0_T0_s_3_execute(id__,x__)) 
+CS___M_ctrl0_stm0_T0_s_2_sync = {|
+	__M_ctrl0_stm0_enter.y.x, 
+	__M_ctrl0_stm0_entered.y.x, 
+	__M_ctrl0_stm0_exit.y.x, 
+	__M_ctrl0_stm0_exited.y.x,
+	__M_ctrl0_stm0_enter.x.y, 
+	__M_ctrl0_stm0_entered.x.y, 
+	__M_ctrl0_stm0_exit.x.y, 
+	__M_ctrl0_stm0_exited.x.y |
+	x <- {"__M_ctrl0_stm0_s0","__M_ctrl0_stm0_F","__M_ctrl0_stm0_T0_s_3","__M_ctrl0_stm0_T0_s_2"},
+	y <- {"__M_ctrl0_stm0_T0_s_2"}
+|}
+
+
+
+__M_ctrl0_stm0_T0_s_2_triggers = {|
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1",
+	__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0"
+|}
+S___M_ctrl0_stm0_T0_s_2(id__) = let
+	T___M_ctrl0_stm0_T0(id__)	= __M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0" ->  __M_ctrl0_stm0_exit!"__M_ctrl0_stm0_T0_s_2"!"__M_ctrl0_stm0_T0_s_2" -> SKIP;
+						SKIP;__M_ctrl0_stm0_exited!"__M_ctrl0_stm0_T0_s_2"!"__M_ctrl0_stm0_T0_s_2" -> SKIP;
+						SKIP;__M_ctrl0_stm0_enter!"__M_ctrl0_stm0_T0_s_2"!"__M_ctrl0_stm0_s0" -> __M_ctrl0_stm0_entered!"__M_ctrl0_stm0_T0_s_2"!"__M_ctrl0_stm0_s0" ->
+						S___M_ctrl0_stm0_T0_s_2(id__)
+
+	S___M_ctrl0_stm0_T0_s_2_execute(id__,o__) = 
+	SKIP; 
+	__M_ctrl0_stm0_entered!o__!"__M_ctrl0_stm0_T0_s_2" ->
+	   (SKIP
+	   														; STOP /\ (
+	   															    T___M_ctrl0_stm0_T0(id__)
+	   															    []
+	   															    __M_ctrl0_stm0_internal__?x:diff(__M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","__M_ctrl0_stm0_T1","__M_ctrl0_stm0_T0"}) ->
+	   															      __M_ctrl0_stm0_exit?y:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_2"})!"__M_ctrl0_stm0_T0_s_2" -> (
+	   															      	SKIP;
+	   															      	__M_ctrl0_stm0_exited!y!"__M_ctrl0_stm0_T0_s_2" -> SKIP);
+	   															      	S___M_ctrl0_stm0_T0_s_2(id__)
+	   															    )
+	   														)
+within
+__M_ctrl0_stm0_enter?x__:diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_T0_s_2"})!"__M_ctrl0_stm0_T0_s_2" -> ( 
+	S___M_ctrl0_stm0_T0_s_2_execute(id__,x__)) 
+
+I___M_ctrl0_stm0_i(id__) = T___M_ctrl0_stm0_T0_t_3(id__)
+
+
+
+__M_ctrl0_stm0_int_int = {|
+__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0",
+__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1",
+__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0_t_3",
+__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0_t_2"
+|}
+
+__M_ctrl0_stm0_internal_events = {|__M_ctrl0_stm0_enter,__M_ctrl0_stm0_entered,
+			 				  __M_ctrl0_stm0_exit,__M_ctrl0_stm0_exited|}
+
+T___M_ctrl0_stm0_T0_t_3(id__)	= __M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0_t_3" -> SKIP;__M_ctrl0_stm0_enter!"__M_ctrl0_stm0"!"__M_ctrl0_stm0_T0_s_3" -> __M_ctrl0_stm0_entered!"__M_ctrl0_stm0"!"__M_ctrl0_stm0_T0_s_3" ->
+SKIP
+
+S___M_ctrl0_stm0_s0_R(id__) = S___M_ctrl0_stm0_s0(id__)
+ 		[|diff(__M_ctrl0_stm0_int_int,__M_ctrl0_stm0_s0_triggers)|]
+ 		SKIP
+ 		
+S___M_ctrl0_stm0_F_R(id__) = S___M_ctrl0_stm0_F(id__)
+ 		[|diff(__M_ctrl0_stm0_int_int,__M_ctrl0_stm0_F_triggers)|]
+ 		SKIP
+ 		
+S___M_ctrl0_stm0_T0_s_3_R(id__) = S___M_ctrl0_stm0_T0_s_3(id__)
+ 		[|diff(__M_ctrl0_stm0_int_int,__M_ctrl0_stm0_T0_s_3_triggers)|]
+ 		SKIP
+ 		
+S___M_ctrl0_stm0_T0_s_2_R(id__) = S___M_ctrl0_stm0_T0_s_2(id__)
+ 		[|diff(__M_ctrl0_stm0_int_int,__M_ctrl0_stm0_T0_s_2_triggers)|]
+ 		SKIP
+ 		
+STM___M_ctrl0_stm0(id__) = (I___M_ctrl0_stm0_i(id__)
+[|{|__M_ctrl0_stm0_enter.x.y,
+		__M_ctrl0_stm0_entered.x.y,
+		__M_ctrl0_stm0_exit.x.y,
+		__M_ctrl0_stm0_exited.x.y |
+		x <- diff(__M_ctrl0_stm0_SIDS,{"__M_ctrl0_stm0_s0","__M_ctrl0_stm0_F","__M_ctrl0_stm0_T0_s_3","__M_ctrl0_stm0_T0_s_2"}),
+		y <- {"__M_ctrl0_stm0_s0","__M_ctrl0_stm0_F","__M_ctrl0_stm0_T0_s_3","__M_ctrl0_stm0_T0_s_2"}
+|}|]
+(S___M_ctrl0_stm0_s0_R(id__)
+  [|inter(CS___M_ctrl0_stm0_s0_sync,union(union(CS___M_ctrl0_stm0_F_sync,CS___M_ctrl0_stm0_T0_s_3_sync),CS___M_ctrl0_stm0_T0_s_2_sync))|]
+ (S___M_ctrl0_stm0_F_R(id__)
+   [|inter(CS___M_ctrl0_stm0_F_sync,union(CS___M_ctrl0_stm0_T0_s_3_sync,CS___M_ctrl0_stm0_T0_s_2_sync))|]
+  (S___M_ctrl0_stm0_T0_s_3_R(id__)
+    [|inter(CS___M_ctrl0_stm0_T0_s_3_sync,CS___M_ctrl0_stm0_T0_s_2_sync)|]
+   S___M_ctrl0_stm0_T0_s_2_R(id__))
+  )
+ )
+ 	)
+-- optimized memory process
+
+MemoryTransitions___M_ctrl0_stm0(id__) = ((__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0" -> MemoryTransitions___M_ctrl0_stm0(id__)
+[]
+__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T1" -> MemoryTransitions___M_ctrl0_stm0(id__)
+[]
+__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0_t_3" -> MemoryTransitions___M_ctrl0_stm0(id__)
+[]
+__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0_t_2" -> MemoryTransitions___M_ctrl0_stm0(id__)))
+
+
+MemoryVariablesProcesses___M_ctrl0_stm0 = {}
+
+MemoryVariables___M_ctrl0_stm0 = ||| (P, alpha) : MemoryVariablesProcesses___M_ctrl0_stm0 @ P
+MemoryVariablesSyncSet___M_ctrl0_stm0 = {||}
+MemoryVariablesHideSet___M_ctrl0_stm0 = {||}
+
+MemoryN___M_ctrl0_stm0(id__) = sbisim(diamond((sbisim(diamond(MemoryVariables___M_ctrl0_stm0)) [| MemoryVariablesSyncSet___M_ctrl0_stm0 |] sbisim(diamond(MemoryTransitions___M_ctrl0_stm0(id__)))) \ MemoryVariablesHideSet___M_ctrl0_stm0))
+-- unoptimized memory
+Memory___M_ctrl0_stm0(id__) = (
+	__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0" -> Memory___M_ctrl0_stm0(id__)
+	  []
+	__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T1" -> Memory___M_ctrl0_stm0(id__)
+	  []
+	__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0_t_3" -> Memory___M_ctrl0_stm0(id__)
+	  []
+	__M_ctrl0_stm0_internal__!"__M_ctrl0_stm0_T0_t_2" -> Memory___M_ctrl0_stm0(id__)
+	)
+-- main process
+__M_ctrl0_stm0_aux(id__) = ((STM___M_ctrl0_stm0(id__)
+	[|union(
+		{||},
+		{|__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0",
+		__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T1",
+		__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0_t_3",
+		__M_ctrl0_stm0_internal__."__M_ctrl0_stm0_T0_t_2"|}
+	)|]
+	sbisim(diamond(MemoryN___M_ctrl0_stm0(id__)))
+	--sbisim(diamond(MemoryN___M_ctrl0_stm0(id__)))
+)
+\union({||},
+{||}))
+[|{|__M_ctrl0_stm0_terminate|}|>SKIP\{|__M_ctrl0_stm0_internal__|}
+
+__M_ctrl0_stm0(id__) = __M_ctrl0_stm0_aux(id__) \ __M_ctrl0_stm0_internal_events
+__M_ctrl0_stm0_FVS(id__) = __M_ctrl0_stm0_aux(id__)
+__M_ctrl0_stm0_VS(id__) = ShowV___M_ctrl0_stm0(__M_ctrl0_stm0_FVS(id__))
+__M_ctrl0_stm0_O(id__) = sbisim(diamond(__M_ctrl0_stm0(id__)))
+__M_ctrl0_stm0_VS_O(id__) = sbisim(diamond(__M_ctrl0_stm0_VS(id__)))

@@ -1,0 +1,31 @@
+ExternalEvents___M_ctrl0 = {||}
+
+assert T___M_ctrl0(0) :[deterministic]
+assert T___M_ctrl0(0) :[divergence-free]
+assert T___M_ctrl0(0) ; RUN({tock}) :[deadlock-free]
+
+-- no time locks
+assert RUN({tock}) ||| CHAOS(ExternalEvents___M_ctrl0)      [F= prioritise((T___M_ctrl0(0) ; RUN({tock})) |\ union(ExternalEvents___M_ctrl0,{tock}),<{},{tock}>)
+
+-- zeno freedom
+assert T___M_ctrl0(0) |\ union(ExternalEvents___M_ctrl0,{tock})  :[divergence-free]
+
+-- every state is reachable in this controller
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_s0"|}
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_F"|}
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_3"|}
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_2"|}
+
+-- every state can be reached infinitely often
+assert ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_s0"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_s0"|}) 
+assert ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_F"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_F"|}) 
+assert ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_3"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_3"|}) 
+assert ShowEnteredV___M_ctrl0_stm0(T___M_ctrl0_VS(0)) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_2"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_2"|}) 
+
+-- timed model is a refinement
+assert sbisim(diamond(__M_ctrl0(0))) [F= T___M_ctrl0(0) \ {tock}
+assert sbisim(diamond(__M_ctrl0_VS(0))) [T= T___M_ctrl0_VS(0) \ {tock}
+
+-- do time constraints constrain traces?
+assert T___M_ctrl0(0) \ {tock} [T= sbisim(diamond(__M_ctrl0(0)))
+assert T___M_ctrl0_VS(0) \ {tock} [T= sbisim(diamond(__M_ctrl0_VS(0)))

@@ -1,0 +1,46 @@
+ExternalEvents___M_ctrl0_stm0 = {||}
+
+P_T___M_ctrl0_stm0 =  T___M_ctrl0_stm0(0)
+P___M_ctrl0_stm0 =  __M_ctrl0_stm0(0)
+P_T___M_ctrl0_stm0_VS =  T___M_ctrl0_stm0_VS(0)
+P___M_ctrl0_stm0_VS =  __M_ctrl0_stm0_VS(0)
+
+assert P_T___M_ctrl0_stm0 :[deterministic]
+assert P_T___M_ctrl0_stm0 :[divergence-free]
+assert P_T___M_ctrl0_stm0 ; RUN({tock}) :[deadlock-free]
+
+-- no time locks
+assert RUN({tock}) ||| CHAOS(ExternalEvents___M_ctrl0_stm0)      [F= prioritise((P_T___M_ctrl0_stm0 ; RUN({tock})) |\ union(ExternalEvents___M_ctrl0_stm0,{tock}),<{},{tock}>)
+
+-- zeno freedom
+assert P_T___M_ctrl0_stm0 |\ union(ExternalEvents___M_ctrl0_stm0,{tock})  :[divergence-free]
+
+-- every state is reachable
+
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV|}
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV|}
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV|}
+assert not STOP [T= ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV|}
+
+-- states can be reached infinitely often
+assert ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_s0"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_s0"|})
+assert ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_F"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_F"|})
+assert ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_3"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_3"|})
+assert ShowEnteredV___M_ctrl0_stm0(P_T___M_ctrl0_stm0_VS) |\ {|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_2"|} [T= RUN({|__M_ctrl0_stm0_enteredV."__M_ctrl0_stm0_T0_s_2"|})
+
+-- timed model is a refinement
+assert sbisim(diamond(P_T___M_ctrl0_stm0)) [F= P_T___M_ctrl0_stm0 \ {tock}
+assert sbisim(diamond(P_T___M_ctrl0_stm0_VS)) [T= P_T___M_ctrl0_stm0_VS \ {tock}
+
+-- do time constraints constrain traces?
+assert P_T___M_ctrl0_stm0 \ {tock} [T= sbisim(diamond(P___M_ctrl0_stm0))
+assert P_T___M_ctrl0_stm0_VS \ {tock} [T= sbisim(diamond(P___M_ctrl0_stm0_VS))
+
+-- memory models consistency check
+T_MemoryN___M_ctrl0_stm0 =  timed::MemoryN___M_ctrl0_stm0(0)
+T_MemoryO___M_ctrl0_stm0 =  timed::MemoryO___M_ctrl0_stm0(0)
+
+assert T_MemoryN___M_ctrl0_stm0 [FD= T_MemoryO___M_ctrl0_stm0
+assert T_MemoryO___M_ctrl0_stm0 [FD= T_MemoryN___M_ctrl0_stm0
+
+-- clocks used after reset

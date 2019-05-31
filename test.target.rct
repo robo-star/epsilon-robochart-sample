@@ -1,0 +1,16 @@
+package _ 
+
+module M { 
+	robotic platform rp {
+		  
+	}
+	controller ctrl0 {
+		stm stm0 {
+			initial i
+			state s0 { }
+			transition T0 { from T0_s_2 to s0 action  wait(1) }
+			transition T1 { from s0 to F }
+			final F
+		state T0_s_3 { } state T0_s_2 { } transition T0_t_3 { from i to T0_s_3 action wait ( 3) } transition T0_t_2 { from T0_s_3 to T0_s_2 action wait ( 3) } }
+	}
+}

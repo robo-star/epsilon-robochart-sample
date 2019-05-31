@@ -1,0 +1,8 @@
+-- generate __M
+assert __M_O(0) :[deadlock-free]	
+assert __M_O(0);RUN({r__}) :[deadlock-free]
+assert __M_O(0) :[deterministic]
+assert __M_O(0) :[divergence-free]
+	
+chase___M = chase(__M_O(0))
+

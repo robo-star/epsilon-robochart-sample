@@ -1,0 +1,42 @@
+include "defs/timed_definitions.csp"
+include "../defs/test_defs.csp"
+include "../instantiations.csp"
+include "../defs/robochart_defs.csp"
+
+-- untimed definitions
+
+include "../defs/M.csp"
+include "../defs/core_defs.csp"
+include "../defs/M_ctrl0.csp"
+include "../defs/M_ctrl0_stm0.csp"
+include "../defs/new_defs.csp"
+
+module timed
+exports
+
+-- timed definitions
+
+include "defs/M_ctrl0_stm0.csp"
+include "defs/M.csp"
+include "defs/M_ctrl0.csp"
+endmodule
+
+transparent diamond
+transparent sbisim
+transparent wbisim
+transparent chase
+
+channel r__
+
+-- declare timed names of all controllers, modules and state-machines
+-- and include assertions
+
+T_M_ctrl0_stm0 = timed::M_ctrl0_stm0
+T_M_ctrl0_stm0_VS = timed::M_ctrl0_stm0_VS
+
+T_M_ctrl0 = timed::M_ctrl0
+T_M_ctrl0_VS = timed::M_ctrl0_VS
+
+T_M = timed::M
+T_M_VS = timed::M_VS
+

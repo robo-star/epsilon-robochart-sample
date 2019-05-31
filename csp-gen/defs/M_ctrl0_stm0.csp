@@ -1,0 +1,182 @@
+channel M_ctrl0_stm0_internal__: M_ctrl0_stm0_TIDS
+
+ShowEvents_M_ctrl0_stm0(P,E) = P[[ M_ctrl0_stm0_entered.x.y <- M_ctrl0_stm0_enteredV.y | M_ctrl0_stm0_entered.x.y <- E]]
+							 [[	M_ctrl0_stm0_enter.x.y <- M_ctrl0_stm0_enterV.y | M_ctrl0_stm0_enter.x.y <- E]]
+							 [[ M_ctrl0_stm0_exit.x.y <- M_ctrl0_stm0_exitV.y | M_ctrl0_stm0_exit.x.y <- E]]
+							 [[ M_ctrl0_stm0_exited.x.y <- M_ctrl0_stm0_exitedV.y | M_ctrl0_stm0_exited.x.y <- E ]]
+							 
+ShowEnteredV_M_ctrl0_stm0(P) = P[[ M_ctrl0_stm0_entered.x.y <- M_ctrl0_stm0_enteredV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS ]]
+ShowEnterV_M_ctrl0_stm0(P) = P[[ M_ctrl0_stm0_enter.x.y <- M_ctrl0_stm0_enterV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS ]]
+ShowExitV_M_ctrl0_stm0(P) = P[[ M_ctrl0_stm0_exit.x.y <- M_ctrl0_stm0_exitV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS ]]
+ShowExitedV_M_ctrl0_stm0(P) = P[[ M_ctrl0_stm0_exited.x.y <- M_ctrl0_stm0_exitedV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS ]]
+ShowV_M_ctrl0_stm0(P) = P[[ M_ctrl0_stm0_entered.x.y <- M_ctrl0_stm0_enteredV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS]]
+							 [[	M_ctrl0_stm0_enter.x.y <- M_ctrl0_stm0_enterV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS ]]
+							 [[ M_ctrl0_stm0_exit.x.y <- M_ctrl0_stm0_exitV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS]]
+							 [[ M_ctrl0_stm0_exited.x.y <- M_ctrl0_stm0_exitedV.y | x <- M_ctrl0_stm0_SIDS, y <- M_ctrl0_stm0_SIDS ]]
+
+channel M_ctrl0_stm0_enteredV, M_ctrl0_stm0_enterV, M_ctrl0_stm0_exitV, M_ctrl0_stm0_exitedV : M_ctrl0_stm0_SIDS
+channel M_ctrl0_stm0_enter, M_ctrl0_stm0_entered: M_ctrl0_stm0_SIDS.M_ctrl0_stm0_SIDS
+channel M_ctrl0_stm0_exit,M_ctrl0_stm0_exited: M_ctrl0_stm0_SIDS.M_ctrl0_stm0_SIDS
+
+
+
+-- declaring identifiers of state and final states
+M_ctrl0_stm0_SIDS = {
+	"M_ctrl0_stm0",
+	"M_ctrl0_stm0_s0",
+	"M_ctrl0_stm0_F"
+}
+
+-- declaring identifiers of transitions
+M_ctrl0_stm0_TIDS = {
+	"__NULLTRANSITION__",
+	"M_ctrl0_stm0_T0",
+	"M_ctrl0_stm0_T1"
+}
+
+-- declaring state machine events
+
+channel M_ctrl0_stm0_terminate
+
+-- declaring all states
+CS_M_ctrl0_stm0_s0_sync = {|
+	M_ctrl0_stm0_enter.y.x, 
+	M_ctrl0_stm0_entered.y.x, 
+	M_ctrl0_stm0_exit.y.x, 
+	M_ctrl0_stm0_exited.y.x,
+	M_ctrl0_stm0_enter.x.y, 
+	M_ctrl0_stm0_entered.x.y, 
+	M_ctrl0_stm0_exit.x.y, 
+	M_ctrl0_stm0_exited.x.y |
+	x <- {"M_ctrl0_stm0_s0","M_ctrl0_stm0_F"},
+	y <- {"M_ctrl0_stm0_s0"}
+|}
+
+
+
+M_ctrl0_stm0_s0_triggers = {|
+	M_ctrl0_stm0_internal__."M_ctrl0_stm0_T1"
+|}
+S_M_ctrl0_stm0_s0(id__) = let
+	T_M_ctrl0_stm0_T1(id__)	= M_ctrl0_stm0_internal__!"M_ctrl0_stm0_T1" ->  M_ctrl0_stm0_exit!"M_ctrl0_stm0_s0"!"M_ctrl0_stm0_s0" -> SKIP;
+						SKIP;M_ctrl0_stm0_exited!"M_ctrl0_stm0_s0"!"M_ctrl0_stm0_s0" -> SKIP;
+						M_ctrl0_stm0_enter!"M_ctrl0_stm0_s0"!"M_ctrl0_stm0_F" -> M_ctrl0_stm0_entered!"M_ctrl0_stm0_s0"!"M_ctrl0_stm0_F" ->
+						S_M_ctrl0_stm0_s0(id__)
+
+	S_M_ctrl0_stm0_s0_execute(id__,o__) = 
+	SKIP; 
+	M_ctrl0_stm0_entered!o__!"M_ctrl0_stm0_s0" ->
+	   (SKIP
+	   														; STOP /\ (
+	   															    T_M_ctrl0_stm0_T1(id__)
+	   															    []
+	   															    M_ctrl0_stm0_internal__?x:diff(M_ctrl0_stm0_TIDS,{"__NULLTRANSITION__","M_ctrl0_stm0_T1"}) ->
+	   															      M_ctrl0_stm0_exit?y:diff(M_ctrl0_stm0_SIDS,{"M_ctrl0_stm0_s0"})!"M_ctrl0_stm0_s0" -> (
+	   															      	SKIP;
+	   															      	M_ctrl0_stm0_exited!y!"M_ctrl0_stm0_s0" -> SKIP);
+	   															      	S_M_ctrl0_stm0_s0(id__)
+	   															    )
+	   														)
+within
+M_ctrl0_stm0_enter?x__:diff(M_ctrl0_stm0_SIDS,{"M_ctrl0_stm0_s0"})!"M_ctrl0_stm0_s0" -> ( 
+	S_M_ctrl0_stm0_s0_execute(id__,x__)) 
+CS_M_ctrl0_stm0_F_sync = {|
+	M_ctrl0_stm0_enter.y.x, 
+	M_ctrl0_stm0_entered.y.x, 
+	M_ctrl0_stm0_exit.y.x, 
+	M_ctrl0_stm0_exited.y.x,
+	M_ctrl0_stm0_enter.x.y, 
+	M_ctrl0_stm0_entered.x.y, 
+	M_ctrl0_stm0_exit.x.y, 
+	M_ctrl0_stm0_exited.x.y |
+	x <- {"M_ctrl0_stm0_s0","M_ctrl0_stm0_F"},
+	y <- {"M_ctrl0_stm0_F"}
+|}
+
+
+
+M_ctrl0_stm0_F_triggers = {||}
+S_M_ctrl0_stm0_F(id__) = let
+
+	S_M_ctrl0_stm0_F_execute(id__,o__) = 
+	SKIP; 
+	M_ctrl0_stm0_entered!o__!"M_ctrl0_stm0_F" ->
+	   M_ctrl0_stm0_terminate -> SKIP
+	   within
+M_ctrl0_stm0_enter?x__:diff(M_ctrl0_stm0_SIDS,{"M_ctrl0_stm0_F"})!"M_ctrl0_stm0_F" -> ( 
+	S_M_ctrl0_stm0_F_execute(id__,x__)) 
+
+I_M_ctrl0_stm0_i(id__) = T_M_ctrl0_stm0_T0(id__)
+
+
+
+M_ctrl0_stm0_int_int = {|
+M_ctrl0_stm0_internal__."M_ctrl0_stm0_T0",
+M_ctrl0_stm0_internal__."M_ctrl0_stm0_T1"
+|}
+
+M_ctrl0_stm0_internal_events = {|M_ctrl0_stm0_enter,M_ctrl0_stm0_entered,
+			 				  M_ctrl0_stm0_exit,M_ctrl0_stm0_exited|}
+
+T_M_ctrl0_stm0_T0(id__)	= M_ctrl0_stm0_internal__!"M_ctrl0_stm0_T0" -> SKIP;SKIP;SKIP;M_ctrl0_stm0_enter!"M_ctrl0_stm0"!"M_ctrl0_stm0_s0" -> M_ctrl0_stm0_entered!"M_ctrl0_stm0"!"M_ctrl0_stm0_s0" ->
+SKIP
+
+S_M_ctrl0_stm0_s0_R(id__) = S_M_ctrl0_stm0_s0(id__)
+ 		[|diff(M_ctrl0_stm0_int_int,M_ctrl0_stm0_s0_triggers)|]
+ 		SKIP
+ 		
+S_M_ctrl0_stm0_F_R(id__) = S_M_ctrl0_stm0_F(id__)
+ 		[|diff(M_ctrl0_stm0_int_int,M_ctrl0_stm0_F_triggers)|]
+ 		SKIP
+ 		
+STM_M_ctrl0_stm0(id__) = (I_M_ctrl0_stm0_i(id__)
+[|{|M_ctrl0_stm0_enter.x.y,
+		M_ctrl0_stm0_entered.x.y,
+		M_ctrl0_stm0_exit.x.y,
+		M_ctrl0_stm0_exited.x.y |
+		x <- diff(M_ctrl0_stm0_SIDS,{"M_ctrl0_stm0_s0","M_ctrl0_stm0_F"}),
+		y <- {"M_ctrl0_stm0_s0","M_ctrl0_stm0_F"}
+|}|]
+(S_M_ctrl0_stm0_s0_R(id__)
+  [|inter(CS_M_ctrl0_stm0_s0_sync,CS_M_ctrl0_stm0_F_sync)|]
+ S_M_ctrl0_stm0_F_R(id__))
+ 	)
+-- optimized memory process
+
+MemoryTransitions_M_ctrl0_stm0(id__) = ((M_ctrl0_stm0_internal__!"M_ctrl0_stm0_T0" -> MemoryTransitions_M_ctrl0_stm0(id__)
+[]
+M_ctrl0_stm0_internal__!"M_ctrl0_stm0_T1" -> MemoryTransitions_M_ctrl0_stm0(id__)))
+
+
+MemoryVariablesProcesses_M_ctrl0_stm0 = {}
+
+MemoryVariables_M_ctrl0_stm0 = ||| (P, alpha) : MemoryVariablesProcesses_M_ctrl0_stm0 @ P
+MemoryVariablesSyncSet_M_ctrl0_stm0 = {||}
+MemoryVariablesHideSet_M_ctrl0_stm0 = {||}
+
+MemoryN_M_ctrl0_stm0(id__) = sbisim(diamond((sbisim(diamond(MemoryVariables_M_ctrl0_stm0)) [| MemoryVariablesSyncSet_M_ctrl0_stm0 |] sbisim(diamond(MemoryTransitions_M_ctrl0_stm0(id__)))) \ MemoryVariablesHideSet_M_ctrl0_stm0))
+-- unoptimized memory
+Memory_M_ctrl0_stm0(id__) = (
+	M_ctrl0_stm0_internal__!"M_ctrl0_stm0_T0" -> Memory_M_ctrl0_stm0(id__)
+	  []
+	M_ctrl0_stm0_internal__!"M_ctrl0_stm0_T1" -> Memory_M_ctrl0_stm0(id__)
+	)
+-- main process
+M_ctrl0_stm0_aux(id__) = ((STM_M_ctrl0_stm0(id__)
+	[|union(
+		{||},
+		{|M_ctrl0_stm0_internal__."M_ctrl0_stm0_T0",
+		M_ctrl0_stm0_internal__."M_ctrl0_stm0_T1"|}
+	)|]
+	sbisim(diamond(MemoryN_M_ctrl0_stm0(id__)))
+	--sbisim(diamond(MemoryN_M_ctrl0_stm0(id__)))
+)
+\union({||},
+{||}))
+[|{|M_ctrl0_stm0_terminate|}|>SKIP\{|M_ctrl0_stm0_internal__|}
+
+M_ctrl0_stm0(id__) = M_ctrl0_stm0_aux(id__) \ M_ctrl0_stm0_internal_events
+M_ctrl0_stm0_FVS(id__) = M_ctrl0_stm0_aux(id__)
+M_ctrl0_stm0_VS(id__) = ShowV_M_ctrl0_stm0(M_ctrl0_stm0_FVS(id__))
+M_ctrl0_stm0_O(id__) = sbisim(diamond(M_ctrl0_stm0(id__)))
+M_ctrl0_stm0_VS_O(id__) = sbisim(diamond(M_ctrl0_stm0_VS(id__)))

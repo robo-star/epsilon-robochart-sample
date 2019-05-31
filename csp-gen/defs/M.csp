@@ -1,0 +1,46 @@
+-- declaring robotic platform events
+
+-- declaring robotic platform variables
+
+
+-- declaring controller memory
+
+Memory_M_rp(id__) = SKIP
+
+-- declaring module termination channel
+
+channel M_terminate
+
+
+M(id__) = 	(((M_ctrl0(id__)[[M_ctrl0_terminate <- M_terminate]])
+	[|union({||},
+	{||})|]
+	Memory_M_rp(id__)
+	)\union({||},{||})
+	[|{|M_terminate|}|>SKIP)\{|M_terminate|}
+-- visible state equivalent
+
+M_VS(id__) = 	(((M_ctrl0_VS(id__)[[M_ctrl0_terminate <- M_terminate]])
+	[|union({||},
+	{||})|]
+	Memory_M_rp(id__)
+	)\union({||},{||})
+	[|{|M_terminate|}|>SKIP)\{|M_terminate|}
+	
+
+-- O version (optimised)
+M_O(id__) = sbisim(diamond(	(((M_ctrl0_O(id__)[[M_ctrl0_terminate <- M_terminate]])
+	[|union({||},
+	{||})|]
+	Memory_M_rp(id__)
+	)\union({||},{||})
+	[|{|M_terminate|}|>SKIP)\{|M_terminate|}))
+
+-- visible state optimised equivalent
+
+M_VS_O(id__) = sbisim(diamond(	(((M_ctrl0_VS_O(id__)[[M_ctrl0_terminate <- M_terminate]])
+	[|union({||},
+	{||})|]
+	Memory_M_rp(id__)
+	)\union({||},{||})
+	[|{|M_terminate|}|>SKIP)\{|M_terminate|}))

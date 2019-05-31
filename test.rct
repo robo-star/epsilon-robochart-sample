@@ -1,0 +1,17 @@
+
+diagram test 
+
+module M { 
+	robotic platform rp {
+		  
+	}
+	controller ctrl0 {
+		stm stm0 {
+			initial i
+			state s0 { }
+			transition T0 { from i to s0 action wait(3);wait(3);wait(1) }
+			transition T1 { from s0 to F }
+			final F
+		}
+	}
+}

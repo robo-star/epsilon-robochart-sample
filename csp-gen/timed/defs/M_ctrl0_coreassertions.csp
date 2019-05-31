@@ -1,0 +1,27 @@
+ExternalEvents_M_ctrl0 = {||}
+
+assert T_M_ctrl0(0) :[deterministic]
+assert T_M_ctrl0(0) :[divergence-free]
+assert T_M_ctrl0(0) ; RUN({tock}) :[deadlock-free]
+
+-- no time locks
+assert RUN({tock}) ||| CHAOS(ExternalEvents_M_ctrl0)      [F= prioritise((T_M_ctrl0(0) ; RUN({tock})) |\ union(ExternalEvents_M_ctrl0,{tock}),<{},{tock}>)
+
+-- zeno freedom
+assert T_M_ctrl0(0) |\ union(ExternalEvents_M_ctrl0,{tock})  :[divergence-free]
+
+-- every state is reachable in this controller
+assert not STOP [T= ShowEnteredV_M_ctrl0_stm0(T_M_ctrl0_VS(0)) |\ {|M_ctrl0_stm0_enteredV."M_ctrl0_stm0_s0"|}
+assert not STOP [T= ShowEnteredV_M_ctrl0_stm0(T_M_ctrl0_VS(0)) |\ {|M_ctrl0_stm0_enteredV."M_ctrl0_stm0_F"|}
+
+-- every state can be reached infinitely often
+assert ShowEnteredV_M_ctrl0_stm0(T_M_ctrl0_VS(0)) |\ {|M_ctrl0_stm0_enteredV."M_ctrl0_stm0_s0"|} [T= RUN({|M_ctrl0_stm0_enteredV."M_ctrl0_stm0_s0"|}) 
+assert ShowEnteredV_M_ctrl0_stm0(T_M_ctrl0_VS(0)) |\ {|M_ctrl0_stm0_enteredV."M_ctrl0_stm0_F"|} [T= RUN({|M_ctrl0_stm0_enteredV."M_ctrl0_stm0_F"|}) 
+
+-- timed model is a refinement
+assert sbisim(diamond(M_ctrl0(0))) [F= T_M_ctrl0(0) \ {tock}
+assert sbisim(diamond(M_ctrl0_VS(0))) [T= T_M_ctrl0_VS(0) \ {tock}
+
+-- do time constraints constrain traces?
+assert T_M_ctrl0(0) \ {tock} [T= sbisim(diamond(M_ctrl0(0)))
+assert T_M_ctrl0_VS(0) \ {tock} [T= sbisim(diamond(M_ctrl0_VS(0)))

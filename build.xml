@@ -1,0 +1,33 @@
+<project default="transform">
+		<target name="loadModels">
+			<sequential>
+			   <basename property="SourceNoExt" file="${SourceFile}" suffix=".rct"/>
+				<property name="TargetFile" value="${SourceNoExt}.target.rct"/>   
+				<echo>Copying original model file '${SourceFile}' to file '${TargetFile}'.</echo>
+				<copy file="${SourceFile}" tofile="${TargetFile}" overwrite="yes"/>
+			</sequential>
+			
+			<!-- For practical reasons of enabling the target model to be loaded within the
+				 same project, we need to rename the package. We can do this using EOL or Flock.
+				 
+				 TODO: 	Will need to consider what will happen with multiple .rct files in a project,
+				 		and how this change is reflected across several files. I suspect it will be
+				 		necessary to load all model files at the same time? 
+				 		
+				 		Seems ok as long as they are all loaded into the same group?
+				 		https://www.eclipse.org/forums/index.php/t/165623/-->
+			
+			<epsilon.emf.loadModel name="Source"
+				modelfile="${TargetFile}"
+				metamodeluri="http://www.robocalc.circus/RoboChart"
+				read="true" store="true" expand="true"/>
+		</target>
+			
+		<target name="transform" depends="loadModels">
+		<epsilon.epl src="erules/transform.epl" repeatwhilematches="true">
+			<model ref="Source"/>
+		</epsilon.epl>
+		
+		<epsilon.disposeModels />
+	</target>
+</project>

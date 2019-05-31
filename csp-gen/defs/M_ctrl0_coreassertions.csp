@@ -1,0 +1,7 @@
+-- generate M_ctrl0
+P_M_ctrl0 =  M_ctrl0_O(0)
+assert P_M_ctrl0 :[deadlock-free]	
+assert P_M_ctrl0;RUN({r__}) :[deadlock-free]
+assert P_M_ctrl0 :[deterministic]
+assert P_M_ctrl0 :[divergence-free]
+

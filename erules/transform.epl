@@ -1,0 +1,75 @@
+
+-- Initialization of variables, for example, before transformation.
+pre {
+	-- Special packages included by RoboTool that are not to be renamed.
+	var ignorePackages : Set = Set{"function_toolkit", "sequence_toolkit", "relation_toolkit", "set_toolkit"};
+	-- Controls whether debug information is printed.
+	var debug = true;
+}
+
+-- We can define operations.
+operation printDebug(string) {
+	if (debug) {(": "+string).println();}
+}
+
+-- To allow opening the same package within the same project, we rename it.
+-- Even if it originally had no name, it is given a name by this rule.
+pattern renamePackage 
+	s : Source!RCPackage {
+	-- Here we insert a new attribute to 's' called 'visisted' that does not
+	-- exist in the original metamodel. This allows us to restrict the number of
+	-- times this rule is applied. Initially such an attribute is 'null' before
+	-- being created, afterwards we set its value.
+	match: s.~visited = null and not ignorePackages.includes(s.name)
+	 do {
+	 	var newName = s.name + "_";
+	 	printDebug("Rename package: '" + s.name + "' to '" + newName + "'");
+	 	s.name = newName;
+	 	s.~visited = true;
+	 }
+}
+
+-- The following rule breaks a sequence of statements in a Transition's action
+-- into actions across a sequence of transitions and states.
+pattern breakSeqStatements 
+	s : Source!StateMachineDef,
+	t : Source!Transition in: s.transitions {
+	match: 	t.action.isKindOf(Source!SeqStatement) 
+		-- We restrict application of the rule to while the size of the sequence
+		-- is greater than zero.
+		and t.action.statements.size() > 0
+	do { 
+		-- A new state is created, and a unique name based on the transition t's
+		-- name is given, plus the current size of the sequence. This is just an
+		-- example, but in general it may be possible to implement an operation
+		-- that walks the model to ensure locally unique names, thus obviating
+		-- the need for an explicit decision every time a new element is created.
+		var newState = new State();
+		newState.name = t.name + "_s_" + t.action.statements.size();
+		
+		-- A new Transition is created, whose source is t.source, and
+		-- whose target is the newState. Name uniqueness also ensured
+		-- by combining the name of 't' and the size of the sequence.
+		var newT = new Transition();
+		newT.source = t.source;
+		newT.name = t.name + "_t_" + t.action.statements.size();
+		newT.target = newState;
+		newT.action = t.action.statements.removeAt(0);
+		if (t.action.statements.size = 1) {
+			t.action = t.action.statements.first();
+		}
+		
+		-- The old transition t's source is pointed to the newState;
+		t.source = newState;
+		
+		-- Finally, we add the newT and newState to the StateMachineDef.
+		s.transitions.add(newT);
+		s.nodes.add(newState);
+		
+		if (debug) {
+			for (ts in s.transitions) {
+				printDebug("Transition '" + ts.name + "' from '" + ts.source.name +  "' to '" + ts.target.name + "' (action: " + ts.action + ")");
+			}
+		}
+	}
+}
