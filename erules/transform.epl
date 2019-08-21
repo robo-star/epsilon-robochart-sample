@@ -2,7 +2,7 @@
 -- Initialization of variables, for example, before transformation.
 pre {
 	-- Special packages included by RoboTool that are not to be renamed.
-	var ignorePackages : Set = Set{"function_toolkit", "sequence_toolkit", "relation_toolkit", "set_toolkit"};
+	var ignorePackages : Set = Set{"function_toolkit", "sequence_toolkit", "relation_toolkit", "set_toolkit", "core"};
 	-- Controls whether debug information is printed.
 	var debug = true;
 }
